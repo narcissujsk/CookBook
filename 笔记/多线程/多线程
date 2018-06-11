@@ -1,0 +1,56 @@
+Python多进程并发(multiprocessing)用法实例详解
+
+由于Python设计的限制(我说的是咱们常用的CPython)。最多只能用满1个CPU核心。
+Python提供了非常好用的多进程包multiprocessing，你只需要定义一个函数，Python会替你完成其他所有事情。借助这个包，可以轻松完成从单进程到并发执行的转换。
+1、新建单一进程
+如果我们新建少量进程，可以如下：
+import multiprocessing
+import time
+def func(msg):
+  for i in xrange(3):
+    print msg
+    time.sleep(1)
+if __name__ == "__main__":
+  p = multiprocessing.Process(target=func, args=("hello", ))
+  p.start()
+  p.join()
+  print "Sub-process done."
+2、使用进程池
+是的，你没有看错，不是线程池。它可以让你跑满多核CPU，而且使用方法非常简单。
+注意要用apply_async，如果落下async，就变成阻塞版本了。
+processes=4是最多并发进程数量。
+import multiprocessing
+import time
+def func(msg):
+  for i in xrange(3):
+    print msg
+    time.sleep(1)
+if __name__ == "__main__":
+  pool = multiprocessing.Pool(processes=4)
+  for i in xrange(10):
+    msg = "hello %d" %(i)
+    pool.apply_async(func, (msg, ))
+  pool.close()
+  pool.join()
+  print "Sub-process(es) done."
+3、使用Pool，并需要关注结果
+更多的时候，我们不仅需要多进程执行，还需要关注每个进程的执行结果，如下：
+import multiprocessing
+import time
+def func(msg):
+  for i in xrange(3):
+    print msg
+    time.sleep(1)
+  return "done " + msg
+if __name__ == "__main__":
+  pool = multiprocessing.Pool(processes=4)
+  result = []
+  for i in xrange(10):
+    msg = "hello %d" %(i)
+    result.append(pool.apply_async(func, (msg, )))
+  pool.close()
+  pool.join()
+  for res in result:
+    print res.get()
+  print "Sub-process(es) done."
+希望本文所述对大家的Python程序设计有所帮助

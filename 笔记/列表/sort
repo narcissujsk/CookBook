@@ -1,0 +1,215 @@
+描述
+sort() 函数用于对原列表进行排序，如果指定参数，则使用比较函数指定的比较函数。
+语法
+sort()方法语法：
+list.sort(cmp=None, key=None, reverse=False)
+参数
+cmp -- 可选参数, 如果指定了该参数会使用该参数的方法进行排序。
+key -- 主要是用来进行比较的元素，只有一个参数，具体的函数的参数就是取自于可迭代对象中，指定可迭代对象中的一个元素来进行排序。
+reverse -- 排序规则，reverse = True 降序， reverse = False 升序（默认）。
+返回值
+该方法没有返回值，但是会对列表的对象进行排序。
+实例
+以下实例展示了 sort() 函数的使用方法：
+实例
+#!/usr/bin/python
+
+aList = ['Google', 'Runoob', 'Taobao', 'Facebook']
+
+aList.sort()
+print ( "List : ", aList)
+以上实例输出结果如下：
+List :  ['Facebook', 'Google', 'Runoob', 'Taobao']
+以下实例降序输出列表：
+实例
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+# 列表
+vowels = ['e', 'a', 'u', 'o', 'i']
+
+# 降序
+vowels.sort(reverse=True)
+
+# 输出结果
+print ( '降序输出:', vowels )
+以上实例输出结果如下：
+降序输出: ['u', 'o', 'i', 'e', 'a']
+以下实例演示了通过指定列表中的元素排序来输出列表：
+实例
+#!/usr/bin/python
+
+# 获取列表的第二个元素
+def takeSecond(elem):
+    return elem[1]
+
+# 列表
+random = [(2, 2), (3, 4), (4, 1), (1, 3)]
+
+# 指定第二个元素排序
+random.sort(key=takeSecond)
+
+# 输出类别
+print ('排序列表：', random)
+以上实例输出结果如下：
+排序列表：[(4, 1), (2, 2), (1, 3), (3, 4)]
+
+
+
+不同类型之间无法直接进行排序
+list3 = ['a',10086,'wo',10010,]
+list3.sort()
+
+print(list3)
+输出结果显示错误：
+list3.sort()
+TypeError: '<' not supported between instances of 'int' and 'str'
+可见 sort 方法不适合 int 和 str 类型的比较。
+
+list3 = ['a',10086,'wo',10010,]
+list3.sort(key=lambda x:str(x))
+print(list3)
+[10010, 10086, 'a', 'wo']
+
+
+list1 = ['我','爱','python']
+list2 = [100, 200, 300,400,300]
+list1.sort()
+list2.sort()
+print(list1,list2)
+输出结果：
+['python', '我', '爱'] [100, 200, 300, 300, 400]
+分别比较是可行的。
+对上面的代码稍作修改：
+list1 = ['我','爱','python',[1,2,3]]
+list1.sort()
+
+print(list1)
+输出结果也是错误的，显示 list 和 str 不能相互比较。
+
+list1 = ['我','爱','python',[1,2,3]]
+list1.sort(key=lambda x:str(x))
+print(list1)
+
+[[1, 2, 3], 'python', '我', '爱']
+
+1.字符串排序
+def list_sort_string():
+    list=["delphi","Delphi","python","Python","c++","C++","c","C","golang","Golang"]
+    list.sort() #按字典顺序升序排列
+    print("升序:",list)
+
+    list.sort(reverse=True) #按降序排列
+    print("降序:",list)
+排序结果：
+升序: ['C', 'C++', 'Delphi', 'Golang', 'Python', 'c', 'c++', 'delphi', 'golang', 'python']
+降序: ['python', 'golang', 'delphi', 'c++', 'c', 'Python', 'Golang', 'Delphi', 'C++', 'C']
+
+2.数值型排序
+def list_sort_number():
+    list=[30,40,10,50,50.1,80,60,100,90]
+    list.sort()
+    print("升序:",list)
+
+    list.sort(reverse=True)
+    print("降序:",list)
+排序结果：
+升序: [10, 30, 40, 50, 50.1, 60, 80, 90, 100]
+降序: [100, 90, 80, 60, 50.1, 50, 40, 30, 10]
+
+
+3.根据列表中类对象的属性排序
+class element(object):
+    def __init__(self,id="",name=""):
+        self.id=id
+        self.name=name
+    def __lt__(self, other): # override <操作符
+        if self.id<other.id:
+            return True
+        return False
+
+    def __str__(self): # override __str__
+        return "id={0},name={1}".format(self.id,self.name)
+
+def sort_by_attribute():
+    list=[element(id="130",name="json"),
+          element(id="01",name="jack"),element(id="120",name="tom")]
+    list.sort()
+    for item in list:
+        print(item)
+由于 list.sort() 函数在排序时，使用的是小于号对比，所以自定义的数据类型需要 override __lt__(小于) 函数才能实现排序。
+根据 element 的 id 属性排序
+排序列的结果：
+id=01,name=jack
+id=120,name=tom
+id=130,name=json
+
+
+4.根据列表中元素的长度排序
+def list_sort_by_length():
+    list=["delphi","Delphi","python","Python","c++","C++","c","C","golang","Golang"]
+    list.sort(key=lambda ele:len(ele)) #按元素长度顺序升序排列
+    print("升序:",list)
+
+    list.sort(key=lambda ele:len(ele),reverse=True) #按降序排列
+    print("降序:",list)
+借助于 lambda 表达式，计算 list 列表中的元素的长度，根据元素的长度进行排序。
+排序的结果：
+升序: ['c', 'C', 'c++', 'C++', 'delphi', 'Delphi', 'python', 'Python', 'golang', 'Golang']
+降序: ['delphi', 'Delphi', 'python', 'Python', 'golang', 'Golang', 'c++', 'C++', 'c', 'C']
+
+
+5.根据列表中元素的多个属性进行排序：
+def two_d_list_sort():
+    list=[ ["1","c++","demo"],
+           ["1","c","test"],
+           ["2","java",""],
+           ["8","golang","google"],
+           ["4","python","gil"],
+           ["5","swift","apple"]
+    ]
+    list.sort(key=lambda ele:ele[0])# 根据第1个元素排序
+    print(list)
+    list.sort(key=lambda ele:ele[1]) #先根据第2个元素排序
+    print(list)
+    list.sort(key=lambda ele:ele[1]+ele[0]) #先根据第2个元素排序，再根据第1个元素排序
+    print(list)
+同样借助于 lambda 表达式完成，当然也可以定义一个与 labmda 具有相同意义的函数实现排序。
+排序结果：
+[['1', 'c++', 'demo'], ['1', 'c', 'test'], ['2', 'java', ''], ['4', 'python', 'gil'], ['5', 'swift', 'apple'], ['8', 'golang', 'google']]
+[['1', 'c', 'test'], ['1', 'c++', 'demo'], ['8', 'golang', 'google'], ['2', 'java', ''], ['4', 'python', 'gil'], ['5', 'swift', 'apple']]
+[['1', 'c++', 'demo'], ['1', 'c', 'test'], ['8', 'golang', 'google'], ['2', 'java', ''], ['4', 'python', 'gil'], ['5', 'swift', 'apple']]
+
+
+6.动态的根据用户指定的索引进行排序：
+def two_d_list_sort2(sort_index="0,1,2"): # 动态的根据传入的元素索引进行排序
+    list=[ ["1","c++","demo"],
+           ["1","c","test"],
+           ["2","java",""],
+           ["8","golang","google"],
+           ["4","python","gil"],
+           ["5","swift","apple"]
+           ]
+    key_set=""
+    for item in sort_index.split(","):
+        key_set+="ele["+item+"]+"
+    key_set=key_set.rstrip("+")
+    list.sort(key=lambda ele:eval(key_set))
+    print("排序索引:",sort_index,list)
+
+if __name__=="__main__":
+    two_d_list_sort2("0")
+    two_d_list_sort2("1")
+    two_d_list_sort2("2")
+    two_d_list_sort2("1,0")
+有时候，在写代码之前，并不知道根据二维表的哪几列排序，而是在程序运行的时候根据输入或配置决定的，为了解决这个动态根据多个列或属性排序的问题，借助了 eval() 函数，eval() 函数能够把字符串编译成 python 代码并运行，从而达到动态根据多个列或属性排序的目的。
+排序结果：
+排序索引: 0 [['1', 'c++', 'demo'], ['1', 'c', 'test'], ['2', 'java', ''], ['4', 'python', 'gil'], ['5', 'swift', 'apple'], ['8', 'golang', 'google']]
+排序索引: 1 [['1', 'c', 'test'], ['1', 'c++', 'demo'], ['8', 'golang', 'google'], ['2', 'java', ''], ['4', 'python', 'gil'], ['5', 'swift', 'apple']]
+排序索引: 2 [['2', 'java', ''], ['5', 'swift', 'apple'], ['1', 'c++', 'demo'], ['4', 'python', 'gil'], ['8', 'golang', 'google'], ['1', 'c', 'test']]
+排序索引: 1,0 [['1', 'c++', 'demo'], ['1', 'c', 'test'], ['8', 'golang', 'google'], ['2', 'java', ''], ['4', 'python', 'gil'], ['5', 'swift', 'apple']]
+综上，基本总结了 list.sort 的使用的大部分场景，如下：
+ 1、默认排序
+ 2、根据类对象的单个属性进行排序，当然也可以扩展为根据类对象的多个属性进行排序
+ 3、根据元素的固有属性进行排序，如：长度、第N个元素等。为了简单，所以借助了 lambda 表达式，当然也可以使用普通函数代替 lambda 表达式
+ 4、动态的根据多个列进行排序，同时借助 lambda 和 eval() 函数实现

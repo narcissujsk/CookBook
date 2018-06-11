@@ -1,0 +1,95 @@
+python eval()
+
+
+
+
+eval(expression, globals=None, locals=None)  --- 官方文档中的解释是，将字符串str当成有效的表达式来求值并返回计算结果。globals和locals参数是可选的，如果提供了globals参数，那么它必须是dictionary类型；如果提供了locals参数，那么它可以是任意的map对象。
+
+
+
+python是用命名空间来记录变量的轨迹的，命名空间是一个dictionary，键是变量名，值是变量值。
+
+当一行代码要使用变量 x 的值时，Python 会到所有可用的名字空间去查找变量，按照如下顺序:
+
+1）局部名字空间 - 特指当前函数或类的方法。如果函数定义了一个局部变量 x, 或一个参数 x，Python 将使用它，然后停止搜索。
+
+2）全局名字空间 - 特指当前的模块。如果模块定义了一个名为 x 的变量，函数或类，Python 将使用它然后停止搜索。
+
+3）内置名字空间 - 对每个模块都是全局的。作为最后的尝试，Python 将假设 x 是内置函数或变量。
+
+python的全局名字空间存储在一个叫globals()的dict对象中；局部名字空间存储在一个叫locals()的dict对象中。我们可以用print (locals())来查看该函数体内的所有变量名和变量值。
+
+
+
+eval()使用原因：
+
+1）在编译语言里要动态地产生代码，基本上是不可能的，但动态语言是可以，意味着软件已经部署到服务器上了，但只要作很少的更改，只好直接修改这部分的代码，就可立即实现变化，不用整个软件重新加载。
+
+2）在machin learning里根据用户使用这个软件频率，以及方式，可动态地修改代码，适应用户的变化。
+
+
+
+example:
+
+a=1
+g={'a':20}
+eval("a+1",g)
+返回21
+
+
+
+
+#test eval() and locals()
+x = 1
+y = 1
+num1 = eval("x+y")
+print (num1)
+
+def g():
+    x = 2
+    y = 2
+    num3 = eval("x+y")
+    print (num3)
+    num2 = eval("x+y",globals())
+    #num2 = eval("x+y",globals(),locals())
+    print (num2)
+
+g()
+
+print locals()["x"]
+print locals()["y"]
+print globals()["x"]
+print globals()["y"]
+
+num1的值是2；num3的值也很好理解，是4；num2的值呢？由于提供了globals()参数，那么首先应当找全局的x和y值，也就是都为1，那么显而易见，num2的值也是2。如果注释掉该句，执行下面一句呢？根据第3)点可知，结果为4
+
+
+
+locals()对象的值不能修改，globals()对象的值可以修改
+
+
+#test globals() and locals()
+
+z=0
+def f():
+    z = 1
+    print (locals())
+    locals()["z"] = 2
+    print (locals())
+f()
+globals()["z"] = 2
+print (z)
+
+可以得出，两个print (locals())的结果是一样的，说明没有修改成功。而print (z)的值是2，说明修改成功了
+
+
+
+eval有安全性问题,比如用户恶意输入就会获得当前目录文件
+
+eval("__import__('os').system('dir')")
+复制代码
+>>> import os
+>>> 'os' in globals()
+True
+>>> os.system('whoami')
+ap\zhail
