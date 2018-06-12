@@ -124,7 +124,7 @@ if __name__ == '__main__':
         p = Stock("sss", 99)
         print(p)
         p.name = '01234567'
-        p.age = 3
+        p.age = 3.0
         print(p)
     t2()
 
