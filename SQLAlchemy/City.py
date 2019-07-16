@@ -63,7 +63,7 @@ if __name__ == "__main__":
     print()
 
 
-    for instance in session.query(Country).limit(10):
+    for instance in session.query(Country).limit(2):
         print("*********************")
         print(instance)
         print("*********************")
