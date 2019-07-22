@@ -1,20 +1,27 @@
 import time,commands,json
 import sys,os,daemon,subprocess
+import logging
 
+def log():
+    logging.basicConfig(
+        filename='/root/iscsi.log',
+        level=logging.INFO,
+        format='%(levelname)s:%(asctime)s:%(message)s'
+    )
 
 def checkLogined(iqn):
+    logging.debug("checkLogined : iscsiadm -m session")
     cmd="iscsiadm -m session"
     try:
         logineds=os.popen(cmd).readlines()
-        print logineds
+        logging.debug(logineds)
     except Exception as e:
         print e
     re=0
-    i=1
     for st in logineds:
-        print "no "+str(i)+" "+st
-        i=i+1
+        logging.info(st)
         if(st.find(iqn)>=0):
+            logging.debug("find "+iqn)
             re=1
     return re
 
@@ -79,7 +86,7 @@ def loginout(ip,iqn):
 
 def execute():
     re = getMetadata()
-    print "********************"
+    logging.info("********************")
     meta = re['meta']
     print meta
     iscsi = meta['iscsi']
@@ -112,4 +119,5 @@ def execute():
 
 
 if __name__ == '__main__':
+    log()
     execute()
