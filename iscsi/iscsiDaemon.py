@@ -1,8 +1,8 @@
 import time,commands,json
-import sys,os,daemon
+import sys,os,daemon,subprocess
 
 
-def chechLogined(iqn):
+def checkLogined(iqn):
     cmd="iscsiadm -m session"
     try:
         logineds=os.popen(cmd).readlines()
@@ -28,14 +28,6 @@ def getMetadata():
         print e
     return cc;
 
-def chechLogined(iqn):
-    cmd="iscsiadm -m session"
-    try:
-        logineds=os.popen(cmd).readline()
-        print logineds
-    except Exception as e:
-        print e
-    return logineds;
 
 
 def login(initiatorName,ip,iqn):
@@ -64,8 +56,16 @@ def login(initiatorName,ip,iqn):
 
 def loginout(ip,iqn):
     print "login out "+ ip+"  " +iqn
-    re = os.system("iscsiadm -m node -T "+iqn+" -p "+ip+" -u")
-    re = os.system("iscsiadm -m node -T " + iqn + " -p " + ip + "  -o delete ")
+    cmd1="iscsiadm -m node -T "+iqn+" -p "+ip+" -u"
+    #re = os.system(cmd1)
+    re=subprocess.call(cmd1)
+    print cmd1
+    print re
+    cmd2="iscsiadm -m node -T " + iqn + " -p " + ip + "  -o delete "
+    #re = os.system(cmd2)
+    re = subprocess.call(cmd1)
+    print cmd2
+    print re
     re = os.system("systemctl restart iscsid")
 
 
@@ -89,12 +89,12 @@ if __name__ == '__main__':
         noi_status=meta[noi+"_status"]
         print noi_status
         if(noi_status=="login"):
-            if(chechLogined(noi_iqn)):
+            if(checkLogined(noi_iqn)):
                 print noi_iqn+" already logined"
             else:
                 login(initiator_name,noi_target,noi_iqn)
         if(noi_status=="delete"):
-            if (chechLogined(noi_iqn)):
+            if (checkLogined(noi_iqn)):
                 loginout(noi_target, noi_iqn)
             else:
                 print noi_iqn + " are not logined"
