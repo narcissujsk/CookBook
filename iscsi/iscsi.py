@@ -1,9 +1,8 @@
-import time,commands,json
-import sys,os,subprocess
+import time,json
+import subprocess
 import logging
 import os
 import sys
-
 import atexit
 import signal
 
@@ -190,8 +189,8 @@ if __name__ == '__main__':
     if sys.argv[1] == 'start':
         try:
             daemonize(PIDFILE,
-                      stdout='/root/daemon.log',
-                      stderr='/root/daemon.log')
+                      stdout='/root/iscsi.log',
+                      stderr='/root/iscsi.log')
         except RuntimeError as e:
             logging.info(e)
             raise SystemExit(1)

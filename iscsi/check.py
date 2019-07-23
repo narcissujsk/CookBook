@@ -16,6 +16,6 @@ def chechLogined(iqn):
     return re
 
 if __name__ == '__main__':
-    iqn="iqn.2003-01.org.linux-iscsi.iscsi.x8664:sn.0ae60ea0229dt";
+    iqn="iqn.2003-01.org.linux-iscsi.iscsi.x8664:sn.0ae60ea0229d";
     re=chechLogined(iqn)
     print re
