@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+idea/*
+venv/*
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+/log/
