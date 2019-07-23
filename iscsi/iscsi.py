@@ -195,7 +195,6 @@ if __name__ == '__main__':
         except RuntimeError as e:
             logging.info(e)
             raise SystemExit(1)
-
         main()
 
     elif sys.argv[1] == 'stop':
