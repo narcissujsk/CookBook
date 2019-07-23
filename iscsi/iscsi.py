@@ -181,6 +181,7 @@ def execute():
 if __name__ == '__main__':
     log();
     PIDFILE = '/root/daemon.pid'
+    os.remove(PIDFILE)
 
     if len(sys.argv) != 2:
         logging.info(('Usage: {} [start|stop]'.format(sys.argv[0])))
