@@ -87,7 +87,7 @@ def checkLogined(iqn):
 
 
 def getMetadata():
-    getMetadataCmd="curl http://169.254.169.254/openstack/latest/meta_data.json"
+    getMetadataCmd="curl -s http://169.254.169.254/openstack/latest/meta_data.json"
     cc = ''
     try:
         #p = subprocess.Popen(getMetadataCmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
@@ -181,7 +181,10 @@ def execute():
 if __name__ == '__main__':
     log();
     PIDFILE = '/root/daemon.pid'
-    os.remove(PIDFILE)
+    try:
+        os.remove(PIDFILE)
+    except Exception as e:
+        logging.info(e)
 
     if len(sys.argv) != 2:
         logging.info(('Usage: {} [start|stop]'.format(sys.argv[0])))
