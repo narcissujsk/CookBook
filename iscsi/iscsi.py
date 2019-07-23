@@ -1,5 +1,5 @@
 import time,commands,json
-import sys,os,daemon,subprocess
+import sys,os,subprocess
 import logging
 import os
 import sys
