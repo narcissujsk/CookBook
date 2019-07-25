@@ -1,3 +1,5 @@
+使用administrator用户
+
 #安装服务
 python Clearjob.py install
 
