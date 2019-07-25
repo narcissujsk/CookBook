@@ -1,0 +1,11 @@
+#安装服务
+python Clearjob.py install
+
+#开启服务
+python Clearjob.py start
+
+#停止服务
+python Clearjob.py stop
+
+#移除服务
+python Clearjob.py remove
