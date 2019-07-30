@@ -21,12 +21,9 @@ class PowerShell:
 
     def run( self, cmd, timeout=15 ):
         b_cmd = cmd.encode(encoding=self.coding)
-        print b_cmd
         try:
             b_outs, errs = self.popen.communicate(b_cmd)
-            print b_outs
         except Exception as e:
-            print e
             self.popen.kill()
             b_outs, errs = self.popen.communicate()
 
