@@ -48,6 +48,6 @@ if __name__ == '__main__':
     # Example:
     with PowerShell() as ps:
         re = ps.run('ping 127.0.0.1')
-        #outs, errs = ps.run('Get-NetAdapter|   ConvertTo-Json')
+        re = ps.run('Get-NetAdapter')
         #'Get-NetAdapter
     print('error:', os.linesep, re)
