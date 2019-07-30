@@ -1,11 +1,42 @@
 import os
 from glob import glob
 # Connect-IscsiTarget -NodeAddress $Target.NodeAddress
-
+# (Get-IscsiSession -IscsiTarget (Get-IscsiTarget -NodeAddress  iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f)).SessionIdentifier
+#((Get-IscsiTarget -NodeAddress  iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f)|Get-iSCSISession).SessionIdentifier
 #Get-IscsiTarget
 #iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977
 #iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f
 #Disconnect-IscsiTarget -NodeAddress $Target.NodeAddress
+# Get-IscsiSession
+#Unregister-IscsiSession -SessionIdentifier "ffff820e56a09010-4000013700000001"
+#Get-IscsiSession
+# Unregister-IscsiSession
+def UnregisterIscsiSessionBySessionIdentifier(SessionIdentifier):
+    cmd = " Unregister-IscsiSession  -SessionIdentifier "+SessionIdentifier
+    with PowerShell() as ps:
+        re = ps.run(cmd)
+    return re
+
+def UnregisterIscsiSession(TargetNodeAddress):
+    SessionIdentifier=GetSessionIdentifier(TargetNodeAddress)
+    cmd = " Unregister-IscsiSession  -SessionIdentifier "+SessionIdentifier
+    with PowerShell() as ps:
+        re = ps.run(cmd)
+    return re
+
+def GetSessionIdentifier2(TargetNodeAddress):
+    cmd = " (Get-IscsiSession -IscsiTarget (Get-IscsiTarget -NodeAddress "+ TargetNodeAddress+" )).SessionIdentifier  "
+    with PowerShell() as ps:
+        re = ps.run(cmd)
+    id=re[0].strip()
+    return id
+
+def GetSessionIdentifier(TargetNodeAddress):
+    cmd = " ((Get-IscsiTarget -NodeAddress " + TargetNodeAddress+ ")|Get-iSCSISession).SessionIdentifier  "
+    with PowerShell() as ps:
+        re = ps.run(cmd)
+    id=re[0].strip()
+    return id
 
 def GetIscsiTarget():
     cmd = " Get-IscsiTarget  "
@@ -22,7 +53,7 @@ def SetInitiatorPort(NewNodeAddress):
 
 
 def ConnectIscsiTarget(TargetNodeAddress):
-    cmd=" Connect-IscsiTarget -NodeAddress  "+TargetNodeAddress
+    cmd=" Connect-IscsiTarget -NodeAddress  "+TargetNodeAddress  +" -IsPersistent $True"
     with PowerShell() as ps:
         re = ps.run(cmd)
     return re
@@ -78,6 +109,10 @@ if __name__ == '__main__':
     # Example:
     #SetInitiatorPort("iqn.2019-01.inspur.iscsi:sn.test")
     #re=GetIscsiTarget()
-    re=DisconnectIscsiTarget("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+    re = ConnectIscsiTarget("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+   # re = GetSessionIdentifier2("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+    #re = UnregisterIscsiSession("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+
+    #re=DisconnectIscsiTarget("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
     print(re)
         #'Get-NetAdapter
