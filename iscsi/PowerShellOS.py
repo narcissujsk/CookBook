@@ -1,7 +1,37 @@
 import os
 from glob import glob
+# Connect-IscsiTarget -NodeAddress $Target.NodeAddress
+
+#Get-IscsiTarget
+#iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977
+#iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f
+#Disconnect-IscsiTarget -NodeAddress $Target.NodeAddress
+
+def GetIscsiTarget():
+    cmd = " Get-IscsiTarget  "
+    with PowerShell() as ps:
+        re = ps.run(cmd)
+    return re
 
 
+def SetInitiatorPort(NewNodeAddress):
+    cmd=" Set-InitiatorPort -NodeAddress (Get-InitiatorPort).NodeAddress  -NewNodeAddress "+NewNodeAddress
+    with PowerShell() as ps:
+        re = ps.run(cmd)
+    return re
+
+
+def ConnectIscsiTarget(TargetNodeAddress):
+    cmd=" Connect-IscsiTarget -NodeAddress  "+TargetNodeAddress
+    with PowerShell() as ps:
+        re = ps.run(cmd)
+    return re
+
+def DisconnectIscsiTarget(TargetNodeAddress):
+    cmd=" Disconnect-IscsiTarget -NodeAddress  "+TargetNodeAddress+" -Confirm:$false"
+    with PowerShell() as ps:
+        re = ps.run(cmd)
+    return re
 
 class PowerShell:
     # from scapy
@@ -46,8 +76,8 @@ class PowerShell:
 
 if __name__ == '__main__':
     # Example:
-    with PowerShell() as ps:
-        re = ps.run('ping 127.0.0.1')
-        re = ps.run('Get-NetAdapter')
+    #SetInitiatorPort("iqn.2019-01.inspur.iscsi:sn.test")
+    #re=GetIscsiTarget()
+    re=DisconnectIscsiTarget("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+    print(re)
         #'Get-NetAdapter
-    print('error:', os.linesep, re)
