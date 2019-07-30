@@ -10,6 +10,7 @@ class PowerShell:
                "-Command", "-"]  # Listen commands from stdin
         startupinfo = sp.STARTUPINFO()
         startupinfo.dwFlags |= sp.STARTF_USESHOWWINDOW
+        print (cmd)
         self.popen = sp.Popen(cmd, stdout=sp.PIPE, stdin=sp.PIPE, stderr=sp.STDOUT, startupinfo=startupinfo)
         self.coding = coding
 
