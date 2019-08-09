@@ -4,7 +4,8 @@ import sys
 
 from Crypto.Cipher import AES
 from sys import version_info
-
+#pip uninstall crypto pycryptodome
+#pip install pycryptodome
 class PrpCrypt(object):
 
     def __init__(self, key):
@@ -30,23 +31,14 @@ class PrpCrypt(object):
             text = text + (b'\0' * add)
         self.ciphertext = cryptor.encrypt(text)
         # 因为AES加密时候得到的字符串不一定是ascii字符集的，输出到终端或者保存时候可能存在问题
-        # 所以这里统一把加密后的字符串转化为16进制字符串
-        if sys.version_info < (3, 0):
-            print "2.7"
-            re = base64.b64encode(self.ciphertext)
-        else:
-            print ("3.0")
+        # 所以这里统一把加密后的字符串转化为ascii字符
+        re = base64.b64encode(self.ciphertext)
         return re
 
     # 解密后，去掉补足的空格用strip() 去掉
     def decrypt(self, text):
         cryptor = AES.new(self.key, self.mode, b'0000000000000000')
-        if sys.version_info < (3, 0):
-            print "2.7"
-            str = base64.standard_b64decode(text)
-        else:
-            print ("3.0")
-            str = base64.standard_b64decode(text)
+        str = base64.standard_b64decode(text)
         plain_text = cryptor.decrypt(str)
         return plain_text.rstrip(b'\0')
 
@@ -58,7 +50,7 @@ if __name__ == '__main__':
         format='%(message)s'
     )
     if sys.version_info < (3, 0):
-        print "2.7"
+        print("2.7")
     else:
         print ("3.0")
 
