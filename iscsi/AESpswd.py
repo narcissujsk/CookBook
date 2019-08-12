@@ -72,7 +72,7 @@ if __name__ == '__main__':
         level=logging.INFO,
         format='%(message)s'
     )
-    pc = PrpCrypt('keyskeyskeyskeys')  # 初始化密钥
+    pc = PrpCrypt(AES_SECRET_KEY)  # 初始化密钥
     e = pc.encrypt2("testtesttest")  # 加密
     logging.info(e)
     d = pc.decrypt2(e)  # 解密
