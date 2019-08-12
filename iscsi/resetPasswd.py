@@ -54,34 +54,35 @@ def write(file,text):
     fd.write('{}\n'.format(text))
     fd.close()
 
-def reset_passwd():
-
+def reset_passwd(passwd):
+    cmd="echo root:"+passwd+" | chpasswd"
+    print(cmd)
+    #re = os.popen(cmd).readlines()
     return 0
 
 
 if __name__ == '__main__':
-    passwdpath="/root/CookBook/iscsi/passwd";
-    keypath = "/root/CookBook/iscsi/key";
-    #write(passwdpath, "nt6SXf3qhJd6r5NKbZUWZg==")
-    #write(keypath, "1234567812345678")
+
     try:
         os.remove('/root/CookBook/iscsi/log')
     except Exception as e:
         ss = ''
-
     logging.basicConfig(
         filename='/root/CookBook/iscsi/log',
         level=logging.INFO,
-        format='%(message)s'
+        format='%(levelname)s:%(asctime)s:%(message)s'
     )
-    aespasswd=read_file(passwdpath)
+    passwdpath="/root/CookBook/iscsi/passwd";
+    keypath = "/root/CookBook/iscsi/key";
+    aespasswd = read_file(passwdpath)
     oldkey = read_file(keypath)
     oldpc = PrpCrypt(oldkey)  # 初始化密钥
     print(oldkey)
+    logging.info(oldkey)
     oldpasswd = oldpc.decrypt(aespasswd)
 
     print("old aespasswd:"+aespasswd)
     print("old key:"+oldkey)
     print(len(oldkey))
     print("old passwd:" + oldpasswd)
-    logging.info(aespasswd)
+    reset_passwd(oldpasswd)

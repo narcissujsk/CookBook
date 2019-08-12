@@ -14,6 +14,11 @@ BS = len(AES_SECRET_KEY)
 pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
 unpad = lambda s: s[0:-ord(s[-1:])]
 
+def write(file,text):
+    fd = open(file, 'w')
+    fd.write('{}\n'.format(text))
+    fd.close()
+
 
 class PrpCrypt(object):
 
@@ -52,4 +57,5 @@ if __name__ == '__main__':
     logging.info(d)
     print("1:", e)
     print("2:", d)
+
 
