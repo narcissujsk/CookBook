@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
 import logging,base64
 import sys
-import os,logging
+import os,logging,json
 from Crypto.Cipher import AES
 from sys import version_info
 #pip uninstall crypto pycryptodome
-#pip install pycryptodome
+#ppipinstall pycryptodome
 
 AES_SECRET_KEY = '1234567812345678' #此处16|24|32个字符
 IV = "1234567890123456"
@@ -13,6 +13,20 @@ IV = "1234567890123456"
 BS = len(AES_SECRET_KEY)
 pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
 unpad = lambda s: s[0:-ord(s[-1:])]
+
+def getMetadata():
+    getMetadataCmd="curl -s http://169.254.169.254/openstack/latest/meta_data.json"
+    cc = ''
+    try:
+        #p = subprocess.Popen(getMetadataCmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        jsonstr=os.popen(getMetadataCmd).readline()
+        #logging.info( p
+        #jsonstr=p.stdout.readline()
+        logging.info( str(jsonstr))
+        cc=json.loads(str(jsonstr))
+    except Exception as e:
+        logging.info( e)
+    return cc;
 
 
 class PrpCrypt(object):
@@ -32,9 +46,6 @@ class PrpCrypt(object):
         return unpad(plain_text).decode('utf8')
 
     def __init__(self, key):
-        print(key)
-        print(type(key))
-        print(len(key))
         self.key = key.encode('utf-8')
         self.mode = AES.MODE_CBC
 
@@ -54,7 +65,26 @@ def write(file,text):
     fd.write('{}\n'.format(text))
     fd.close()
 
-def reset_passwd(passwd):
+def reset_passwd():
+    keypath = "/root/CookBook/iscsi/key";
+    oldkey = read_file(keypath)
+
+    print(oldkey)
+    logging.info(oldkey)
+    print("old key:" + oldkey)
+
+    re = getMetadata()
+    meta = re['meta']
+    logging.info("********************")
+
+    logging.info(meta)
+    aeskey = meta['aeskey']
+    logging.info(aeskey)
+    aespasswd=meta['aespasswd']
+
+    pc = PrpCrypt(aeskey)  # 初始化密钥
+    passwd=pc.decrypt(aespasswd)
+    logging.info(aeskey)
     cmd="echo root:"+passwd+" | chpasswd"
     print(cmd)
     #re = os.popen(cmd).readlines()
@@ -72,17 +102,5 @@ if __name__ == '__main__':
         level=logging.INFO,
         format='%(levelname)s:%(asctime)s:%(message)s'
     )
-    passwdpath="/root/CookBook/iscsi/passwd";
-    keypath = "/root/CookBook/iscsi/key";
-    aespasswd = read_file(passwdpath)
-    oldkey = read_file(keypath)
-    oldpc = PrpCrypt(oldkey)  # 初始化密钥
-    print(oldkey)
-    logging.info(oldkey)
-    oldpasswd = oldpc.decrypt(aespasswd)
 
-    print("old aespasswd:"+aespasswd)
-    print("old key:"+oldkey)
-    print(len(oldkey))
-    print("old passwd:" + oldpasswd)
-    reset_passwd(oldpasswd)
+    reset_passwd()
