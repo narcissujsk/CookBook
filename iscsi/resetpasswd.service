@@ -1,0 +1,14 @@
+# /etc/systemd/system
+[Unit]
+Description=resetpasswd service
+
+[Service]
+Type=forking
+ExecStart=/root/CookBook/iscsi/resetpasswd.sh start
+ExecReload=/root/CookBook/iscsi/resetpasswd.sh stop
+
+#ExecStart=/root/CookBook/iscsi/resetpasswd.sh start
+#ExecReload=/root/CookBook/iscsi/resetpasswd.sh stop
+
+[Install]
+WantedBy=multi-user.target
