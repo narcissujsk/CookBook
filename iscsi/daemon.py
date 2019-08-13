@@ -67,12 +67,21 @@ def main():
         sys.stdout.write('Daemon Alive! {}\n'.format(time.ctime()))
     fd.close()
 
+
 if __name__ == '__main__':
+    print 'start'
     PIDFILE = '/root/daemon.pid'
 
     if len(sys.argv) != 2:
-        print('Usage: {} [start|stop]'.format(sys.argv[0]))
-        raise SystemExit(1)
+        try:
+            daemonize(PIDFILE,
+                      stdout='/root/daemon.log',
+                      stderr='/root/daemon.log')
+        except RuntimeError as e:
+            print(e)
+            raise SystemExit(1)
+
+        main()
 
     if sys.argv[1] == 'start':
         try:
@@ -94,5 +103,12 @@ if __name__ == '__main__':
             raise SystemExit(1)
 
     else:
-        print('Unknown command {!r}'.format(sys.argv[1]))
-        raise SystemExit(1)
+        try:
+            daemonize(PIDFILE,
+                      stdout='/root/daemon.log',
+                      stderr='/root/daemon.log')
+        except RuntimeError as e:
+            print(e)
+            raise SystemExit(1)
+
+        main()
