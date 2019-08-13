@@ -67,26 +67,28 @@ def write(file,text):
 
 def reset_passwd():
     keypath = "/root/CookBook/iscsi/key";
-    oldkey = read_file(keypath)
-
-    print(oldkey)
-    logging.info(oldkey)
-    print("old key:" + oldkey)
-
     re = getMetadata()
     meta = re['meta']
     logging.info("********************")
-
     logging.info(meta)
     aeskey = meta['aeskey']
-    logging.info(aeskey)
     aespasswd=meta['aespasswd']
+    oldkey = read_file(keypath)
+    logging.info("old key:" + oldkey)
+    logging.info("key:" + aeskey)
 
-    pc = PrpCrypt(aeskey)  # 初始化密钥
-    passwd=pc.decrypt(aespasswd)
-    logging.info(aeskey)
-    cmd="echo root:"+passwd+" | chpasswd"
-    print(cmd)
+    if(aeskey==oldkey):
+        logging.info("key is same")
+    else:
+        logging.info("key is not same")
+        logging.info("aespasswd:" + aespasswd)
+        pc = PrpCrypt(aeskey)  # 初始化密钥
+        passwd = pc.decrypt(aespasswd)
+        cmd = "echo root:" + passwd + " | chpasswd"
+        logging.info(cmd)
+        re = os.popen(cmd).readlines()
+        write(keypath,aeskey)
+
     #re = os.popen(cmd).readlines()
     return 0
 
