@@ -65,7 +65,7 @@ def main():
 def log():
     logging.basicConfig(
         filename='/root/iscsi.log',
-        level=logging.INFO,
+        level=logging.ERROR,
         format='%(levelname)s:%(asctime)s:%(message)s'
     )
 
@@ -124,7 +124,6 @@ def login(initiatorName,ip,iqn):
     re = os.system(cmd)
     logging.info( cmd)
     logging.info( re)
-
 
 def loginout(ip,iqn):
     logging.info( "login out "+ ip+"  " +iqn)

@@ -1,22 +1,6 @@
-
-E2NM7WN32IN+dj/IsOenag==
-testtesttest
-b'E2NM7WN32IN+dj/IsOenag=='
-b'testtesttest'
-b'E2NM7WN32IN+dj/IsOenag=='
-b'testtesttest'
-b'MLe+jABxTyebxZpAo8/r+w=='
-b'MLe+jABxTyebxZpAo8/r+w=='
-b'testtesttest'
-b'nt6SXf3qhJd6r5NKbZUWZg=='
-b'testtesttest'
-b'nt6SXf3qhJd6r5NKbZUWZg=='
-b'testtesttest'
-nt6SXf3qhJd6r5NKbZUWZg==
-b'testtesttest'
-nt6SXf3qhJd6r5NKbZUWZg==
-b'testtesttest'
-nt6SXf3qhJd6r5NKbZUWZg==
-b'testtesttest'
-nt6SXf3qhJd6r5NKbZUWZg==
-testtesttest
+INFO:2019-08-12 21:16:56,602:{"random_seed": "4WgnQYwxggNSGxAI3zhhe/avNaKe2mG/S+1mS7/jE7cEv+1CR7cOT4miEKzjqnHgEYqDS65joa++smCH/zygPikeKuxWxfZopNJ2L2HeI7rVn8NbMaBQzN85RNwCg9pGLnzxwGp4XBFkIgl9nVZJduaHajcdz8s3UGHA4QfEBtMIw+274HkFtK9tT1SivAMcxDdr6KjWKkD+VPwZ/agiL3opgr2eLVV4jdwBALzIVYYXEVNEGnsx3fV6tr6g1UyVRZFuxlbjT0Pj1Ach2q1TiNAFFZILLioKk71g699xZ6E8GXmgh6TTTdfASsXcTmKbWTTieesPhvi43ReE1C6YNKb3gbMN1fZknYjAEQnp9xrTKlAMg4mGO9pnpD+ToeMRothmvxG04mxan+qWLNNJiiUt1O+5cXcvhazBTtDu0049tRZjoYqn+CkP7GvCC8ETLwCPI/e0CzMdwc+DXGuaCi25+WELKP1iAo5hooBZRy+8qYVBxvZYH3wvbPC9actOSL1he7wzj996Fbt7gqkgp7pedyIzkijtk6KzBvhfe3z9xQ02K6e19um4Q2WYb6eZwjVtrVie0e3MQxcPQMi7DLlpa8DBf+rDESJTtwI02Wa1aQfcthAo6OBiTySvnWQBt03I2LKWycmZYmKm3DGRRq/PyYmsEHs1D9eGBKLFGyM=", "uuid": "ca58ae65-8829-425c-bb55-89b52a9dc856", "availability_zone": "cn-north-3a", "hostname": "iscsi-initiator.novalocal", "launch_index": 0, "devices": [], "meta": {"admin_pass": "123456Pw", "initiator_name": "iqn.2019-01.inspur.iscsi:sn.test", "aeskey": "1234567812345678", "iscsi": "iscsi1,iscsi2", "iscsi2_iqn": "iqn.2003-01.org.linux-iscsi.iscsi.x8664:sn.0ae60ea0229d", "iscsi2_status": "login", "iscsi2_target": "182.34.52.5", "iscsi1_target": "182.34.52.5", "foo": "Foo Value", "iscsi1_status": "login", "aespasswd": "nt6SXf3qhJd6r5NKbZUWZg==", "iscsi1_iqn": "iqn.2003-01.org.linux-iscsi.iscsi.x8664:sn.f0700d2f9fbe"}, "project_id": "64d2e687f4fe4095bd0fd78a99b6eafd", "name": "iscsi-test_initiator_no-delete"}
+INFO:2019-08-12 21:16:56,602:********************
+INFO:2019-08-12 21:16:56,602:{'admin_pass': '123456Pw', 'initiator_name': 'iqn.2019-01.inspur.iscsi:sn.test', 'aeskey': '1234567812345678', 'iscsi': 'iscsi1,iscsi2', 'iscsi2_iqn': 'iqn.2003-01.org.linux-iscsi.iscsi.x8664:sn.0ae60ea0229d', 'iscsi2_status': 'login', 'iscsi2_target': '182.34.52.5', 'iscsi1_target': '182.34.52.5', 'foo': 'Foo Value', 'iscsi1_status': 'login', 'aespasswd': 'nt6SXf3qhJd6r5NKbZUWZg==', 'iscsi1_iqn': 'iqn.2003-01.org.linux-iscsi.iscsi.x8664:sn.f0700d2f9fbe'}
+INFO:2019-08-12 21:16:56,602:old key:1234567812345678
+INFO:2019-08-12 21:16:56,602:key:1234567812345678
+INFO:2019-08-12 21:16:56,603:key is same

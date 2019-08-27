@@ -1,0 +1,10 @@
+[Unit]
+Description=aa service
+
+[Service]
+Type=forking
+ExecStart=/root/run.sh
+ExecStop=/root/stop.sh
+
+[Install]
+WantedBy=multi-user.target

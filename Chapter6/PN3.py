@@ -7,7 +7,7 @@ log = logging.getLogger('test')
 
 if __name__ == "__main__":
     log.info("end")
-    plist = ["%s:%s" % ("user", "password")]
+    plist = ["%s:%s" % ("user", "keyold")]
     plist = ["root:%s" % "ppppp"]
     log.debug(" Change passwd for root plist : %s", plist)
     for line in plist:

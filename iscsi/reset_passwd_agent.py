@@ -1,11 +1,15 @@
-# -*- coding:utf-8 -*-
+import time,json
+import subprocess
+import logging
+import os
+import sys
+import atexit
+import signal
 import logging,base64
 import sys
 import os,logging,json
 from Crypto.Cipher import AES
-from sys import version_info
-#pip uninstall crypto pycryptodome
-#ppipinstall pycryptodome
+
 
 AES_SECRET_KEY = '1234567812345678' #此处16|24|32个字符
 IV = "1234567890123456"
@@ -22,7 +26,7 @@ def getMetadata():
         jsonstr=os.popen(getMetadataCmd).readline()
         #logging.info( p
         #jsonstr=p.stdout.readline()
-        logging.info( str(jsonstr))
+        #logging.info( str(jsonstr))
         cc=json.loads(str(jsonstr))
     except Exception as e:
         logging.info( e)
@@ -65,6 +69,69 @@ def write(file,text):
     fd.write('{}\n'.format(text))
     fd.close()
 
+def daemonize(pidfile, stdin='/dev/null',
+                          stdout='/dev/null',
+                          stderr='/dev/null'):
+
+    if os.path.exists(pidfile):
+        raise RuntimeError('Already running')
+
+    # First fork (detaches from parent)
+    try:
+        if os.fork() > 0:
+            raise SystemExit(0)   # Parent exit
+    except OSError as e:
+        raise RuntimeError('fork #1 failed.')
+
+    os.chdir('/')
+    os.umask(0)
+    os.setsid()
+    # Second fork (relinquish session leadership)
+    try:
+        if os.fork() > 0:
+            raise SystemExit(0)
+    except OSError as e:
+        raise RuntimeError('fork #2 failed.')
+
+    # Flush I/O buffers
+    sys.stdout.flush()
+    sys.stderr.flush()
+
+    # Replace file descriptors for stdin, stdout, and stderr
+    with open(stdin, 'rb', 0) as f:
+        os.dup2(f.fileno(), sys.stdin.fileno())
+    with open(stdout, 'ab', 0) as f:
+        os.dup2(f.fileno(), sys.stdout.fileno())
+    with open(stderr, 'ab', 0) as f:
+        os.dup2(f.fileno(), sys.stderr.fileno())
+
+    # Write the PID file
+    fd = open(pidfile, 'w')
+    fd.write('{}\n'.format(os.getpid()))
+    fd.close()
+    # Arrange to have the PID file removed on exit/signal
+    atexit.register(lambda: os.remove(pidfile))
+
+    # Signal handler for termination (required)
+    def sigterm_handler(signo, frame):
+        raise SystemExit(1)
+
+    signal.signal(signal.SIGTERM, sigterm_handler)
+
+def main():
+    import time
+    while True:
+        time.sleep(10)
+        reset_passwd()
+
+
+def log():
+    logging.basicConfig(
+        filename='/root/resetpasswd.log',
+        level=logging.INFO,
+        format='%(levelname)s:%(asctime)s:%(message)s'
+    )
+
 def reset_passwd():
     keypath = "/root/CookBook/iscsi/key";
     re = getMetadata()
@@ -93,16 +160,39 @@ def reset_passwd():
     return 0
 
 
+
+
+
 if __name__ == '__main__':
-
+    log();
+    PIDFILE = '/root/resetpasswd.pid'
     try:
-        os.remove('/root/CookBook/iscsi/log')
+        os.remove(PIDFILE)
     except Exception as e:
-        ss = ''
-    logging.basicConfig(
-        filename='/root/CookBook/iscsi/log',
-        level=logging.INFO,
-        format='%(levelname)s:%(asctime)s:%(message)s'
-    )
+        logging.info(e)
 
-    reset_passwd()
+    if len(sys.argv) != 2:
+        logging.info(('Usage: {} [start|stop]'.format(sys.argv[0])))
+        raise SystemExit(1)
+
+    if sys.argv[1] == 'start':
+        try:
+            daemonize(PIDFILE,
+                      stdout='/root/resetpasswd.log',
+                      stderr='/root/resetpasswd.log')
+        except RuntimeError as e:
+            logging.info(e)
+            raise SystemExit(1)
+        main()
+
+    elif sys.argv[1] == 'stop':
+        if os.path.exists(PIDFILE):
+            with open(PIDFILE) as f:
+                os.kill(int(f.read()), signal.SIGTERM)
+        else:
+            logging.info(('Not running'))
+            raise SystemExit(1)
+
+    else:
+        logging.info(('Unknown command {!r}'.format(sys.argv[1])))
+        raise SystemExit(1)
