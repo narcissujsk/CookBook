@@ -74,9 +74,9 @@ if __name__ == '__main__':
     )
     pc = PrpCrypt(AES_SECRET_KEY)  # 初始化密钥
     e = pc.encrypt2("testtesttest")  # 加密
-    logging.info(e)
-    d = pc.decrypt2(e)  # 解密
-    logging.info(d)
-    print("1:", e)
-    print("2:", d)
+    logging.info(e.decode('utf8'))
+    d = pc.decrypt2(e.decode('utf8'))  # 解密
+    logging.info(d.decode('utf8'))
+    print("1:", e.decode('utf8'))
+    print("2:", d.decode('utf8'))
 
