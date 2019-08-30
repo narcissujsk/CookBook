@@ -8,7 +8,7 @@ import json
 from sqlalchemy.orm import relationship, backref
 Base = declarative_base()
 import unittest
-
+#pip install mysql-connector-python mysql-connector-python
 
 
 
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     print()
     print()
 
-    for instance in session.query(City).order_by(City.ID).limit(1):
+    for instance in session.query(City).filter_by(ID='1').order_by(City.ID).limit(1):
         print(instance)
     print('Completed')
     print()
