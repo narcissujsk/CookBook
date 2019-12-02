@@ -1,0 +1,10 @@
+[Unit]
+Description=narcissujsk service
+
+[Service]
+Type=forking
+ExecStart=/usr/local/lib/narcissujsk/run.sh
+ExecStop=/usr/local/lib/narcissujsk/stop.sh
+
+[Install]
+WantedBy=multi-user.target

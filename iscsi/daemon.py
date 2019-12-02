@@ -69,7 +69,6 @@ def main():
 
 
 if __name__ == '__main__':
-    print 'start'
     PIDFILE = '/root/daemon.pid'
 
     if len(sys.argv) != 2:
