@@ -9,7 +9,8 @@ print(list1)
 list=["delphi","Delphi","python","Python","c++","C++","c","C","golang","Golang"]
 list.sort() #按字典顺序升序排列
 print("升序:",list)
-
+migration_list = [(n, p,q) for n in list for p in [True, False,"aa"]for q in [True, False,"aa"]]
+print(migration_list)
 list.sort(reverse=True) #按降序排列
 print("降序:",list)
 
