@@ -24,3 +24,13 @@ class Test_AESpawd(unittest.TestCase):
         e = pc.encrypt("385152jsk1")
         print(e)
         self.assertEqual(e, "9O")
+
+    @mock.patch("AESpswd.PrpCrypt")
+    def test03(self,mock):
+        print("")
+        b = mock.return_value
+        print(b)
+        b.encrypt.return_value = "99"
+        e = b.encrypt("385152jsk1")
+        print(e)
+        self.assertEqual(e, "99")
