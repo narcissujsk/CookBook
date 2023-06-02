@@ -9,6 +9,7 @@ def timethis(func):
         result = func(*args, **kwargs)
         end = time.time()
         print(func.__name__, end - start)
+        print("this is a wrapper")
         return result
 
     return wrapper
