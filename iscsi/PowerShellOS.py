@@ -1,11 +1,11 @@
 import os
 from glob import glob
 # Connect-IscsiTarget -NodeAddress $Target.NodeAddress
-# (Get-IscsiSession -IscsiTarget (Get-IscsiTarget -NodeAddress  iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f)).SessionIdentifier
-#((Get-IscsiTarget -NodeAddress  iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f)|Get-iSCSISession).SessionIdentifier
+# (Get-IscsiSession -IscsiTarget (Get-IscsiTarget -NodeAddress  iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f)).SessionIdentifier
+#((Get-IscsiTarget -NodeAddress  iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f)|Get-iSCSISession).SessionIdentifier
 #Get-IscsiTarget
-#iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977
-#iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f
+#iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977
+#iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f
 #Disconnect-IscsiTarget -NodeAddress $Target.NodeAddress
 # Get-IscsiSession
 #Unregister-IscsiSession -SessionIdentifier "ffff820e56a09010-4000013700000001"
@@ -107,12 +107,12 @@ class PowerShell:
 
 if __name__ == '__main__':
     # Example:
-    #SetInitiatorPort("iqn.2019-01.inspur.iscsi:sn.test")
+    #SetInitiatorPort("iqn.2019-10.01.inspur.iscsi:sn.test")
     #re=GetIscsiTarget()
-    re = ConnectIscsiTarget("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
-   # re = GetSessionIdentifier2("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
-    #re = UnregisterIscsiSession("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+    re = ConnectIscsiTarget("iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+   # re = GetSessionIdentifier2("iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+    #re = UnregisterIscsiSession("iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
 
-    #re=DisconnectIscsiTarget("iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
+    #re=DisconnectIscsiTarget("iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977")
     print(re)
         #'Get-NetAdapter

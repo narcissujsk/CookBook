@@ -3,7 +3,7 @@ _format = {
     'mdy': '{d.month}/{d.day}/{d.year}',
     'dmy': '{d.day}/{d.month}/{d.year}'
 }
-from  datetime import date
+
 
 class Date:
 

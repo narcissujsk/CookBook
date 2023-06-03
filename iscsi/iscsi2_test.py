@@ -156,8 +156,8 @@ def loginout(ip,iqn):
 
 def execute():
 
-    initiator_name = "iqn.2019-01.inspur.iscsi:sn.test"
-    shouldLogin=['iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977']
+    initiator_name = "iqn.2019-10.01.inspur.iscsi:sn.test"
+    shouldLogin=['iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.41046f9f6977']
     logined=getLogined();
     noi_target="192.168.195.172";
     logging.info( initiator_name)

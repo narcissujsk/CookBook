@@ -16,7 +16,11 @@ def timethis(func):
 
 
 @timethis
-def countdown(n):
+def countdown(n:int):
+    """
+    :param n:
+    :return:
+    """
     while n > 0:
         n -= 1
         time.sleep(0.01)
@@ -32,4 +36,8 @@ def countdown(n):
 #
 if __name__ == "__main__":
     print('')
-    countdown(111)
+    countdown(11)
+    print(countdown.__name__)
+    print(countdown.__doc__)
+    print(countdown.__annotations__)
+

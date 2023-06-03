@@ -18,8 +18,8 @@ def loginout(ip,iqn):
 
 
 if __name__ == '__main__':
-    initiatorName="iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f.client";
+    initiatorName="iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f.client";
     ip="192.168.195.172";
-    iqn="iqn.2003-01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f";
+    iqn="iqn.2003-10.01.org.linux-iscsi.localhost.x8664:sn.691bed5e444f";
     login(initiatorName,ip,iqn)
     #loginout(ip,iqn)
