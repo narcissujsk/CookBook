@@ -18,7 +18,7 @@ headers = {
 
 form_data = {
     'username': '1791121094@qq.com',
-    "password": '1'
+    "password": '3'
 }
 
 response = requests.post('https://wallhaven.cc/auth/login', data=form_data, headers=headers)

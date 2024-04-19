@@ -12,3 +12,6 @@ with open(image, 'wb') as file:
     file.write(response.content)
 
 print('图片下载完成')
+if __name__ == "__main__":
+    url = 'https://w.wallhaven.cc/full/6d/wallhaven-6do9zx.png'
+
