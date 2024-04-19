@@ -33,7 +33,7 @@ class Image:
             create_directory(directory_path)
             response = requests.get(self.url)
             path = directory_path + name;
-            log.info(threading.current_thread().name+" "+path)
+            #log.info(threading.current_thread().name+" "+path)
             # 将图片数据写入本地文件
             if os.path.exists(path):
                 log.info(threading.current_thread().name+" "+path+" 文件存在")
@@ -44,10 +44,4 @@ class Image:
         except Exception as e:
             log.error(e)
 
-
-if __name__ == "__main__":
-    url = 'https://w.wallhaven.cc/full/lm/wallhaven-lmvlx2.jpg'
-    # 发送请求并获取图片数据
-    img = Image(url)
-    img.download()
-    log.info("end")
+        return
