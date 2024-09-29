@@ -1,0 +1,8 @@
+# 用户cookie
+cookie = {
+    "_pk_id.1.01b8": "xxxx",
+    "_pk_ses.1.01b8": "xxxx",
+    "remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d": "xxx",
+    "XSRF-TOKEN": "xxxx",
+    "wallhaven_session": "xxxx"
+}

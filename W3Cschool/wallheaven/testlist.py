@@ -12,7 +12,7 @@ logging.config.fileConfig('./logging.conf')
 logger = logging.getLogger('root')
 
 for i in range(1, 10):
-    url = "https://wallhaven.cc/search?categories=111&purity=110&sorting=favorites&order=desc&ai_art_filter=1&page="+str(i)
+    url = "https://wallhaven.cc/search?categories=111&purity=111&sorting=favorites&order=desc&ai_art_filter=1&page="+str(i)
 
     payload = {}
     files = {}
