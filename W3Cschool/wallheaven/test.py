@@ -1,17 +1,22 @@
 import logging
+import logging
+import threading
+import requests
+from bs4 import BeautifulSoup
+from Image import Image
+from lxml import etree
+import time
 
-logging.basicConfig(level=logging.INFO)
-log = logging.getLogger('test')
-log.info("init")
+# # pip install lxml
+
+logging.config.fileConfig('./logging.conf')
+# 创建 logger
+logger = logging.getLogger('root')
 
 from Image import Image
 
 url = 'https://w.wallhaven.cc/full/6d/wallhaven-6do9zx.png'
 
-
-image = "wallhaven-6do9zx.png"
-dir = "D:/wallheaven/test/";
-a=Image(image,url,dir)
-a.download()
+logger.info(url)
 if __name__ == "__main__":
-    log.info("end")
+    logger.info("end")

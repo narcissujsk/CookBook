@@ -8,9 +8,11 @@ from Image import Image
 from lxml import etree
 import time
 
-logging.basicConfig(level=logging.INFO)
-log = logging.getLogger('test')
-log.info("init")
+# # pip install lxml
+
+logging.config.fileConfig('./logging.conf')
+# 创建 logger
+logger = logging.getLogger('root')
 
 
 class myThread(threading.Thread):
@@ -21,17 +23,17 @@ class myThread(threading.Thread):
         self.delay = delay
 
     def run(self):
-        log.info("开始线程：" + self.name)
-        self.download(self.threadID)
-        log.info("退出线程：" + self.name)
+        logger.info("开始线程：" + self.name)
+        self.downs(self.threadID)
+        logger.info("退出线程：" + self.name)
         return
 
-    def download(self, i):
+    def downs(self, i):
         try:
             time.sleep(2)
             url = "https://wallhaven.cc/search?categories=111&purity=110&sorting=favorites&order=desc&ai_art_filter=1&page="
-            url = url + str(self)
-            log.info(url)
+            url = url + str(i)
+            logger.info(url)
             payload = {}
             files = {}
             headers = {
@@ -43,30 +45,35 @@ class myThread(threading.Thread):
             print(soup.select(".preview"))
             pList = soup.select(".preview");
             for p in pList:
-                href = p.get("href")
-                log.info(href)
-                href_response = requests.request("GET", href, headers=headers, data=payload, files=files)
-                soup = BeautifulSoup(href_response.content, 'lxml')
-                wallpaper = soup.select("#wallpaper")
-                for paper in wallpaper:
-                    image = Image(paper.get("src"))
-                    image.download()
-            log.info("  downloaded over")
+                try:
+                    time.sleep(2)
+                    href = p.get("href")
+                    logger.info("start download "+href+"")
+                    href_response = requests.request("GET", href, headers=headers, data=payload, files=files)
+                    soup = BeautifulSoup(href_response.content, 'lxml')
+                    wallpaper = soup.select("#wallpaper")
+                    for paper in wallpaper:
+                        image = Image(paper.get("src"), i)
+                        image.download()
+                except Exception as e:
+                    logger.error(e)
+
+            logger.info("  downloaded over")
         except Exception as e:
-            log.error(e)
+            logger.error(e)
         return
 
 
 if __name__ == "__main__":
-    log.info("start")
+    logger.info("start")
     list = []
-    for i in range(70, 80):
+    for i in range(1, 10):
         thread = myThread(i, "thread" + str(i), 1)
         thread.start()
         list.append(thread)
     for thread in list:
         thread.join()
-    log.info("end")
+    logger.info("end")
 
 # thread21 = myThread(21, "thread21" , 1)
 # thread21.start()
