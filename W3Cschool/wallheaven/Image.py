@@ -37,7 +37,7 @@ class Image:
             # fullUrl='https://w.wallhaven.cc/full/28/wallhaven-28mkg9.jpg'
             name = self.url[-20:]
             directory_path = "D:/wallheaven/full/" + str(self.num) + "/";
-            directory_path = "D:/wallheaven/full/test/";
+            directory_path = "D:/wallheaven/full/test2/";
             logger.info("name is "+name +" num is "+str(self.num))
             create_directory(directory_path)
             response = requests.get(self.url)

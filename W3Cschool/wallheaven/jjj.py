@@ -118,6 +118,6 @@ if __name__ == '__main__':
     4:'search' 关键字查找
     """
     get_wall_one_page(1,1)  # 爬取单页
-    # get_total(2, 1, 11)  # 爬取多个指定页码
+    #get_total(2, 1, 11)  # 爬取多个指定页码
 
 
